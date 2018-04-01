@@ -1,0 +1,9 @@
+
+
+<h1>Harvest Überstunden</h1>
+
+
+<h2>Entries</h2>
+<div *ngFor='let entry of time_entries | async'>{{entry.hours}} </div>
+
+<div>{{(time_entries | async).length}}</div>
