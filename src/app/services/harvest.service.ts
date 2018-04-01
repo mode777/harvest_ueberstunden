@@ -44,9 +44,10 @@ export class HarvestService {
         let params = new HttpParams();
         params = params.append('page',i.toString());
 
-        obs2.push(this.http.get(this.baseurl + this.timeurl, {headers: headers, params: params}).map(res2 => {
+        obs2.push(Observable.forkJoin(this.http.get(this.baseurl + this.timeurl, {headers: headers, params: params}).map(res2 => {
           return (<TimeEntries>res2).time_entries;
-        }));
+        })).map( val => <TimeEntry[]>[].concat.apply([],val)));
+
       }
       const retob = Observable.from(obs2).mergeAll();
       return retob;

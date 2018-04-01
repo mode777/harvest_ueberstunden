@@ -1,0 +1,14 @@
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    padding: 1em;
+    align-self: flex-start;
+}
+
+.flex_container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
