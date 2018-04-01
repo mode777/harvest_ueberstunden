@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  access_token : '1318352.pt.Q0hinGtwas6ev0qxWh5yfxvl4PLl6tFghOH_Xn686nt6-Ef-1LdAS6sIoIqBy3aqrWg_fPeiN8amNNbMcBcK_Q',
-  account_id : 489301
+  access_token : '',
+  account_id : 100001 //yournumber
 };
