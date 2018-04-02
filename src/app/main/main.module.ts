@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
-import { UserService } from '../services/user.service';
 import { TimeService } from '../services/time.service';
 import { HarvestService } from '../services/harvest.service';
 import { Routes, RouterModule } from '@angular/router';
@@ -22,10 +21,9 @@ const routes : Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([TimeEffects]),
-    HttpClientModule
+    EffectsModule.forRoot([TimeEffects])
   ],
   declarations: [MainComponent],
-  providers: [HarvestService, UserService, TimeService]
+  providers: [HarvestService, TimeService]
 })
 export class MainModule { }

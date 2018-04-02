@@ -1,6 +1,15 @@
+export interface UserInfo {
+    user: User,
+    accounts: Account[]
+}
 
+export interface Account {
+    id: number,
+    name: string,
+    product: string
+}
 
-export class User {
+export interface User {
     id: number;
     first_name: string;
     last_name: string;
@@ -21,7 +30,4 @@ export class User {
     avatar_url: string;
     created_at: Date;
     updated_at: Date;
-
-    
-
 }
