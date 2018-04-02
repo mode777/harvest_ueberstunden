@@ -4,7 +4,16 @@
 
 
 <h2>Entries</h2>
+<input #overworkinput type="number" min="0" max="12" [value]="overwork | async" (change)="onOverWorkChange(overworkinput.value)">
 <div class="flex_container">
-<div class="flex" *ngFor='let entry of time_entries | async'>{{entry.hours}} </div>
+    <div class="flex" *ngFor='let entry of time_entries | async'>
+        <div>
+            <span>{{entry.spent_date}}</span><br>
+            <span>{{entry.hours}} </span>
+        </div>
+    
+    </div>
 </div>
 <div>{{(time_entries | async).length}}</div>
+
+

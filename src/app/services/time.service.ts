@@ -7,11 +7,16 @@ import { Observable } from 'rxjs/Observable';
 export class TimeService {
 
 
-  curTimeEntries: TimeEntries
-  allTimeEntries: TimeEntry[];
+    changeOverwork(value: number): Observable<TimeEntry[]> {
+      this.overwork = value;
+        return this.harvest.getTimeEntries().map( entries => { entries.forEach( e => e.hours = e.hours-this.overwork);
+          return entries;});
+    }
+
+    overwork : number;
   constructor(private harvest: HarvestService) {
 
-
+    this.overwork = 8;
 
 
   }
@@ -31,6 +36,7 @@ export class TimeService {
   //  }
 
    getAllTimeEntries(): Observable<TimeEntry[]> {
-     return this.harvest.getTimeEntries();
+     return this.harvest.getTimeEntries().map(entries => { entries.forEach( e => e.hours = e.hours-this.overwork);
+      return entries;});
    }
 }

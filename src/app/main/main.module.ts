@@ -9,7 +9,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { TimeEntriesReducer, reducers } from './reducer/main.reducer';
 import { TimeEffects } from './effects/main.effects';
-
+import { logger } from './reducer/meta.reducer';
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 const routes : Routes = [
   {
     path:'',
@@ -20,8 +21,11 @@ const routes : Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([TimeEffects])
+    StoreModule.forRoot(reducers,{metaReducers: [logger]}),
+    EffectsModule.forRoot([TimeEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25
+    })
   ],
   declarations: [MainComponent],
   providers: [HarvestService, TimeService]
