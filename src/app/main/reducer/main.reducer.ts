@@ -20,17 +20,7 @@ export function TimeEntriesReducer(state : TimeEntry[] = [] , action: Action){
     }
 }
 
-export function OverworkHoursReducer(state: number = 8, action: Action){
-    switch(action.type){
-        case TimeEntriesAction.CHANGE_OVERWORK_HOURS: {
-            const act = action as TimeEntriesAction.ChangeOverworkHours;
-            return state;
-        }
-        default: return state;
-    }
-}
 
 export const reducers = {
-    time_entries : TimeEntriesReducer,
-    overwork_hours: OverworkHoursReducer
+    time_entries : TimeEntriesReducer
 }
