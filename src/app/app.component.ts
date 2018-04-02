@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from '../environments/environment';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/debounceTime';
+import { skip, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  
+  constructor() {
+    
+  }
+    
+  async ngOnInit() {
+  }
+
 }
+  

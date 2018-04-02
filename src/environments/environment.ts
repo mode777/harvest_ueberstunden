@@ -6,5 +6,11 @@
 export const environment = {
   production: false,
   access_token : '',
-  account_id : 10001
+  account_id : 10001,
+  authority: 'https://id.getharvest.com',
+  clientId: 'UQ8SJ45lQcQmPd3a7q91nnq_',
+  scope: 'harvest:all',
+  redirectUri: 'http://localhost:4200#', 
+  requireHttps: false,
+  authorizeEndpoint: "https://id.getharvest.com/oauth2/authorize"
 };

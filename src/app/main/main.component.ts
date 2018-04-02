@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
 import { HarvestService } from '../services/harvest.service';
 import { TimeService } from '../services/time.service';
 import { User } from '../models/user.model';
@@ -13,18 +12,19 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
 
   time_entries: Observable<Array<TimeEntry>>;
-  constructor(private store: Store<State>) {
+
+  constructor(private store: Store<State>, private harvest: HarvestService) {
     store.dispatch(new GetTimeEntries());
 
-   }
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.time_entries = this.store.select(state => {
       return state.time_entries;
-  });
+    });
   }
 
 }

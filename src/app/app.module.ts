@@ -1,22 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
-
-import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './tokens/auth-interceptor.service';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
-import {TimeEntriesReducer}from './main/reducer/main.reducer';
+
+import { AppComponent } from './app.component';
+import { AuthInterceptor } from './tokens/auth-interceptor.service';
+import { OauthService } from './services/oauth.service';
+import { AuthGuard } from './guards/auth.guard';
+
+import { TimeEntriesReducer } from './main/reducer/main.reducer';
 import { TimeEffects } from "./main/effects/main.effects";
+import { UserService } from './services/user.service';
+
+
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: './main/main.module#MainModule'
+    loadChildren: './main/main.module#MainModule',
+    canActivate: [AuthGuard]
   },
   {
-    path:'**',
+    path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
   }
@@ -27,14 +34,19 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
-
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [ {
-    provide: HTTP_INTERCEPTORS,
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-  }],
+    },
+    OauthService,
+    UserService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
