@@ -7,6 +7,7 @@ import { Action } from "@ngrx/store";
 import * as timeEntryAction from '../actions/main.actions';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import { catchError } from "rxjs/operators";
 @Injectable()
 export class TimeEffects {
 
@@ -16,7 +17,7 @@ export class TimeEffects {
         .switchMap(() => {
             return this.timeService.getAllTimeEntries().map(val => new timeEntryAction.GetTimeEntriesSuccess(val));
         }
-    )
+    ).catch(err => Observable.of(new timeEntryAction.GetTimeEntriesError()));
 
     constructor(private timeService: TimeService, private actions: Actions){}
 }

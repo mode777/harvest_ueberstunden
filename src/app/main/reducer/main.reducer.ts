@@ -11,7 +11,10 @@ export function TimeEntriesReducer(state : TimeEntry[] = [] , action: Action){
     switch(action.type){
         case TimeEntriesAction.GET_TIME_ENTRIES_SUCCESS: {
             const act = action as TimeEntriesAction.GetTimeEntriesSuccess;
-            return state.concat(act.time_entries);
+            return act.time_entries;
+        }
+        case TimeEntriesAction.GET_TIME_ENTRIES_ERROR: {
+            return [];
         }
         default: return state;
     }

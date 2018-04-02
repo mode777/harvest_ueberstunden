@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, UserInfo } from '../models/user.model';
+import { User } from '../models/user.model';
 import { HttpClient, HttpRequest, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { TimeEntries, TimeEntry } from '../models/time.model';
@@ -10,31 +10,30 @@ import { UserService } from './user.service';
 export class HarvestService {
 
   private baseurl = 'https://api.harvestapp.com'
+  private userurl = '/v2/users/me'
   private timeurl = '/v2/time_entries'
 
-  constructor(private http: HttpClient, private user: UserService) {
-
-  }
-
-  getTimeEntries(): Observable<TimeEntry[]> {
-    const headers = { "Harvest-Account-Id": this.user.accountId.toString() };
+  constructor(private http: HttpClient,private user: UserService) {
     
-    const obs = this.http.get(this.baseurl + this.timeurl, { headers: headers })
-    let flat = obs.flatMap(res => {
-      const te = res as TimeEntries;
-      let obs2: Observable<TimeEntry[]>[] = [];
-      for (let i = te.page; i <= te.total_pages; i++) {
+   }
+
+
+ getTimeEntries() : Observable<TimeEntry[]> {
+    const headers = {"Harvest-Account-Id":this.user.accountId.toString() };
+    return this.http.get<TimeEntries>( this.baseurl + this.timeurl, {headers: headers})
+    .map(res => res.total_pages)
+    .flatMap( pages => {
+      const obsarr: Observable<TimeEntry[]>[] = [];
+      for(let i = 1; i <= pages; i++){
         let params = new HttpParams();
         params = params.append('page', i.toString());
-
-        obs2.push(Observable.forkJoin(this.http.get(this.baseurl + this.timeurl, { params: params, headers: headers }).map(res2 => {
-          return (<TimeEntries>res2).time_entries;
-        })).map(val => <TimeEntry[]>[].concat.apply([], val)));
-
+        obsarr.push(
+          this.http.get<TimeEntries>(this.baseurl + this.timeurl, {headers: headers, params: params})
+          .map(ret => { console.log(ret); return ret.time_entries})
+        );
       }
-      const retob = Observable.from(obs2).mergeAll();
-      return retob;
+      return Observable.forkJoin(obsarr).map(tes => [].concat(...tes));
     });
-    return flat;
+
   }
 }
