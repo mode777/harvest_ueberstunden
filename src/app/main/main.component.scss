@@ -1,3 +1,12 @@
+// import bootstrap scss
+@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/functions', '~bootstrap/scss/_variables.scss';
+
+.navbar {
+    margin-bottom: 50px;
+    border-bottom: 1px solid theme-color('primary');
+}
+
 .flex {
     display: flex;
     flex-direction: row;

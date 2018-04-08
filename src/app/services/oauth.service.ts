@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment'
-import { ActivatedRoute, ParamMap, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { Session } from 'protractor';
 import { HarvestService } from './harvest.service';
 import { UserInfo } from '../models/user.model';
@@ -19,7 +19,7 @@ export class OauthService {
   
   private userurl = 'https://id.getharvest.com/api/v2/accounts'; 
 
-  constructor(private http: HttpClient, private user: UserService) { 
+  constructor(private http: HttpClient, private user: UserService, private router: Router) { 
     
   }
 
@@ -46,7 +46,7 @@ export class OauthService {
         sessionStorage.setItem('oauth_state', JSON.stringify(params));
         const info = await this.getUserInfo();        
         sessionStorage.setItem('user_info', JSON.stringify(info));
-        window.location.replace(window.location.origin);
+        this.router.navigateByUrl("/");
       }
       else {
         this.startImplicitFlow();

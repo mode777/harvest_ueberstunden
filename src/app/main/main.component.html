@@ -1,7 +1,17 @@
-
-
-<h1>Harvest Überstunden</h1>
-
+<nav class="container navbar navbar-light navbar-expand-lg justify-content-between">
+    <a class="navbar-brand text-primary h1 mb-0" routerLink="/">Harvest Überstunden</a>
+    <!-- <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" router-link="users" href="#">Users </a>
+        <a class="nav-link" router-link="organisations" href="#">Organisations </a>
+      </li>    
+    </ul> -->
+    <ul *ngIf="user.email" class="navbar-nav">
+      <span style="margin-right: 5px;">Logged in as</span>
+      <strong>{{user.email}}</strong>&nbsp;-&nbsp; 
+      <a href="#" (click)="logOut($event)">LogOut</a>
+    </ul>
+</nav>
 
 <h2>Entries</h2>
 <input #overworkinput type="number" min="0" max="12" [value]="overwork | async" (change)="onOverWorkChange(overworkinput.value)">
