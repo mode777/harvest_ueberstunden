@@ -25,7 +25,7 @@ export function TimeEntriesReducer(state : TimeEntryDto[] = [], action: TimeEntr
 }
 
 const intialDateRange = [
-    new Date('2015-01-01'),
+    new Date('2018-01-01'),
     new Date()
 ]
 

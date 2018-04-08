@@ -26,8 +26,9 @@ export const getTimeEntriesRange = createSelector([getTimeEntries, getDateRange]
 export const getTimeEntriesGrouped = createSelector([getTimeEntriesRange],
     (time_entries) => {
         const grouping = time_entries.reduce<{[key: string]: TimeEntry}>((p,c) => {
+            //console.log(c.spent_date.toJSON(), c.hours);
             if(!p[c.spent_date.toJSON()]) {
-                p[c.spent_date.toJSON()] = c;
+                p[c.spent_date.toJSON()] = {...c};
             }
             else {
                 p[c.spent_date.toJSON()].hours += c.hours;
