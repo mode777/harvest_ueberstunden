@@ -28,4 +28,8 @@ export class UserService {
     return <UserInfo>JSON.parse(sessionStorage.getItem('user_info') || '{}');
   }
 
+  logOut(){
+    sessionStorage.clear();
+  }
+
 }

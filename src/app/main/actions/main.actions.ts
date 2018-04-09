@@ -1,36 +1,38 @@
 import { Action } from "@ngrx/store";
-import { TimeEntry } from "../../models/time.model";
-
-
+import { TimeEntryDto } from "../../models/time.model";
 
 export const GET_TIME_ENTRIES = 'GET_TIME_ENTRIES';
 export const GET_TIME_ENTRIES_ERROR ='GET_TIME_ENTRIES_ERROR';
-export const GET_TIME_ENTRIES_SUCCESS = 'GET_TIME_ENTREIS_SUCCESS';
+export const GET_TIME_ENTRIES_SUCCESS = 'GET_TIME_ENTRIES_SUCCESS';
 export const CHANGE_OVERWORK_HOURS = 'CHANGE_OVERWORK_HOURS';
+export const CHANGE_DATE_RANGE = 'CHANGE_DATE_RANGE';
+
+
 export class GetTimeEntries implements Action {
-    type: string = GET_TIME_ENTRIES;
+    type = GET_TIME_ENTRIES;
 }
 
-
 export class GetTimeEntriesError implements Action {
-    type: string = GET_TIME_ENTRIES_ERROR;
+    type = GET_TIME_ENTRIES_ERROR;
 }
 
 export class GetTimeEntriesSuccess implements Action {
-    type: string = GET_TIME_ENTRIES_SUCCESS;
-    time_entries: TimeEntry[];
-    constructor(data: TimeEntry[]){
-        this.time_entries = data;
-    }
+    type = GET_TIME_ENTRIES_SUCCESS;
+    constructor(public time_entries: TimeEntryDto[]){}
 }
 
 export class ChangeOverworkHours implements Action {
-    type: string = CHANGE_OVERWORK_HOURS;
-    value: number;
-    constructor(value: number){
-        this.value = value;
-    }
+    type = CHANGE_OVERWORK_HOURS;
+    constructor(public value: number){}
 }
 
+export class ChangeDateRange implements Action {
+    type = CHANGE_DATE_RANGE;
+    constructor(public value: [Date,Date]){}
+}
 
-export type All = GetTimeEntries | GetTimeEntriesError | GetTimeEntriesSuccess | ChangeOverworkHours;
+export type All = GetTimeEntries | 
+    GetTimeEntriesError | 
+    GetTimeEntriesSuccess | 
+    ChangeOverworkHours |
+    ChangeDateRange;

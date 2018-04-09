@@ -1,19 +1,34 @@
-
-
-<h1>Harvest Überstunden</h1>
-
-
-<h2>Entries</h2>
-<input #overworkinput type="number" min="0" max="12" [value]="overwork | async" (change)="onOverWorkChange(overworkinput.value)">
-<div class="flex_container">
-    <div class="flex" *ngFor='let entry of time_entries | async'>
-        <div>
-            <span>{{entry.spent_date}}</span><br>
-            <span>{{entry.hours}} </span>
-        </div>
-    
+<nav class="container navbar navbar-light navbar-expand-lg justify-content-between">
+    <a class="navbar-brand text-primary h1 mb-0" routerLink="/">Harvest Überstunden</a>
+    <ul *ngIf="user.email" class="navbar-nav">
+        <span style="margin-right: 5px;">Logged in as</span>
+        <strong>{{user.email}}</strong>&nbsp;-&nbsp;
+        <a href="#" (click)="logOut($event)">LogOut</a>
+    </ul>
+</nav>
+<div class="container">
+    <h2>Range</h2>
+    <div class="col-xs-12 col-12 col-md-4 form-group">
+        <input bsDaterangepicker 
+            placeholder="Zeitspanne" 
+            class="form-control"
+            [bsValue]="date_range | async"
+            [bsConfig]="{ containerClass: 'theme-blue' }" 
+            (bsValueChange)="onRangeChange($event)">
     </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Stunden</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let entry of time_entries | async">
+                <td>{{entry.spent_date}}</td>
+                <td>{{entry.hours}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
-<div>{{(time_entries | async).length}}</div>
-
-

@@ -27,5 +27,6 @@ export class TimeEffects {
             return this.timeService.changeOverwork(act.value).map(val => new timeEntryAction.GetTimeEntriesSuccess(val));
         }
     ).catch(err => Observable.of(new timeEntryAction.GetTimeEntriesError()));
+    
     constructor(private timeService: TimeService, private actions: Actions){}
 }

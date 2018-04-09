@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HarvestService } from './harvest.service';
-import { TimeEntries, TimeEntry } from '../models/time.model';
+import { TimeEntries, TimeEntryDto } from '../models/time.model';
 import { Observable } from 'rxjs/Observable';
 
+// todo: remove this service
 @Injectable()
 export class TimeService {
 
-
-    changeOverwork(value: number): Observable<TimeEntry[]> {
+    changeOverwork(value: number): Observable<TimeEntryDto[]> {
       this.overwork = value;
-        return this.harvest.getTimeEntries().map( entries => { entries.forEach( e => e.hours = e.hours-this.overwork);
-          return entries;});
+      return this.harvest.getTimeEntries();
     }
 
     overwork : number;
@@ -35,8 +34,7 @@ export class TimeService {
   //   return this.allTimeEntries.map(entry => entry.hours).reduce((prev,cur) => prev + cur);
   //  }
 
-   getAllTimeEntries(): Observable<TimeEntry[]> {
-     return this.harvest.getTimeEntries().map(entries => { entries.forEach( e => e.hours = e.hours-this.overwork);
-      return entries;});
+   getAllTimeEntries(): Observable<TimeEntryDto[]> {
+     return this.harvest.getTimeEntries();
    }
 }
