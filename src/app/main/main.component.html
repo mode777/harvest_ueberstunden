@@ -7,26 +7,36 @@
     </ul>
 </nav>
 <div class="container">
-    <h2>Range</h2>
-    <div class="col-xs-12 col-12 col-md-4 form-group">
-        <input bsDaterangepicker 
-            placeholder="Zeitspanne" 
-            class="form-control"
-            [bsValue]="date_range | async"
-            [bsConfig]="{ containerClass: 'theme-blue' }" 
-            (bsValueChange)="onRangeChange($event)">
+    <div>
+        <div class="col-md-4 form-group float-left">
+            <strong>Zeitraum:</strong>
+            <input bsDaterangepicker 
+                placeholder="Zeitspanne" 
+                class="form-control"
+                [bsValue]="date_range | async"
+                [bsConfig]="{ containerClass: 'theme-blue' }" 
+                (bsValueChange)="onRangeChange($event)">
+        </div>
+        <div class="col-md-6 float-right form-group" style="text-align: right">
+            <strong>Überstunden im Zeitraum</strong>
+            <p class="lead" style="padding: 0.5em;">{{ overwork | async | number }} h</p>
+        </div>
     </div>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Datum</th>
                 <th>Stunden</th>
+                <th>Quota</th>
+                <th>Differenz</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let entry of time_entries | async">
-                <td>{{entry.spent_date}}</td>
-                <td>{{entry.hours}}</td>
+                <td>{{entry.time | date}}</td>
+                <td>{{entry.hours | number}}</td>
+                <td>{{entry.quota | number}}</td>
+                <td>{{(entry.hours - entry.quota) | number}}</td>
             </tr>
         </tbody>
     </table>

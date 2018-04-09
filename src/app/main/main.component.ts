@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HarvestService } from '../services/harvest.service';
 import { TimeService } from '../services/time.service';
 import { User, UserInfo } from '../models/user.model';
-import { TimeEntries, TimeEntryDto, TimeEntry } from '../models/time.model';
+import { TimeEntries, TimeEntryDto, TimeEntry, OverWorkInfo } from '../models/time.model';
 import { Store } from '@ngrx/store';
-import { GetTimeEntries, ChangeOverworkHours, ChangeDateRange } from './actions/main.actions';
+import { GetTimeEntries, ChangeDateRange } from './actions/main.actions';
 import { Observable } from 'rxjs/Observable';
 import { State } from './reducer/main.reducer';
 import { UserService } from '../services/user.service';
-import { getTimeEntries, getOverworkHours, getDateRange, getTimeEntriesRange, getTimeEntriesGrouped } from './selectors/main.selectors';
+import { getTimeEntries, getOverworkHours, getDateRange, getTimeEntriesRange, getTimeEntriesGrouped, getOverworkInfo, getOverworkTotal } from './selectors/main.selectors';
 
 @Component({
   selector: 'app-main',
@@ -17,7 +17,7 @@ import { getTimeEntries, getOverworkHours, getDateRange, getTimeEntriesRange, ge
 })
 export class MainComponent {
 
-  time_entries: Observable<TimeEntry[]>;
+  time_entries: Observable<OverWorkInfo[]>;
   overwork: Observable<number>;
   date_range: Observable<[Date,Date]>;
   
@@ -25,18 +25,14 @@ export class MainComponent {
   
   constructor(private store: Store<State>, private harvest: HarvestService, private userService: UserService) {
     store.dispatch(new GetTimeEntries());
-    store.dispatch(new ChangeOverworkHours(8));
     this.user = userService.userInfo.user;
   }
 
   async ngOnInit() {
-    this.time_entries = this.store.select(getTimeEntriesGrouped);
+    this.time_entries = this.store.select(getOverworkInfo);
     this.overwork = this.store.select(getOverworkHours)
     this.date_range = this.store.select(getDateRange);
-  }
-
-  onOverWorkChange(value: number){
-    this.store.dispatch(new ChangeOverworkHours(value));
+    this.overwork = this.store.select(getOverworkTotal);
   }
 
   onRangeChange(value: [Date,Date]){
