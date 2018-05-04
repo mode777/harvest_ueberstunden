@@ -29,7 +29,7 @@ export class HarvestService {
         params = params.append('page', i.toString());
         obsarr.push(
           this.http.get<TimeEntries>(this.baseurl + this.timeurl, {headers: headers, params: params})
-          .map(ret => { console.log(ret); return ret.time_entries})
+          .map(ret => ret.time_entries)
         );
       }
       return Observable.forkJoin(obsarr).map(tes => [].concat(...tes));

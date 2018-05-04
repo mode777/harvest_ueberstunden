@@ -1,6 +1,19 @@
 import { Time } from "@angular/common";
 import { HttpParams } from "@angular/common/http";
 
+export interface OverWorkInfo {
+    time: Date,
+    hours: number,
+    quota: number
+} 
+
+export interface OverWorkWeek {
+    from: Date,
+    to: Date,
+    hours: number,
+    quota: number
+}
+
 export class TimeEntryDto {
     id: number;
     hours: number;

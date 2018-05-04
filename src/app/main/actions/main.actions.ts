@@ -4,7 +4,6 @@ import { TimeEntryDto } from "../../models/time.model";
 export const GET_TIME_ENTRIES = 'GET_TIME_ENTRIES';
 export const GET_TIME_ENTRIES_ERROR ='GET_TIME_ENTRIES_ERROR';
 export const GET_TIME_ENTRIES_SUCCESS = 'GET_TIME_ENTRIES_SUCCESS';
-export const CHANGE_OVERWORK_HOURS = 'CHANGE_OVERWORK_HOURS';
 export const CHANGE_DATE_RANGE = 'CHANGE_DATE_RANGE';
 
 
@@ -21,11 +20,6 @@ export class GetTimeEntriesSuccess implements Action {
     constructor(public time_entries: TimeEntryDto[]){}
 }
 
-export class ChangeOverworkHours implements Action {
-    type = CHANGE_OVERWORK_HOURS;
-    constructor(public value: number){}
-}
-
 export class ChangeDateRange implements Action {
     type = CHANGE_DATE_RANGE;
     constructor(public value: [Date,Date]){}
@@ -34,5 +28,4 @@ export class ChangeDateRange implements Action {
 export type All = GetTimeEntries | 
     GetTimeEntriesError | 
     GetTimeEntriesSuccess | 
-    ChangeOverworkHours |
     ChangeDateRange;
