@@ -12,11 +12,13 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${this.user.token}`
-      }
-    });
+    if(req.url.startsWith('https://api.harvestapp.com')){
+      req = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this.user.token}`
+        }
+      });
+    }
 
     return next.handle(req);
   }

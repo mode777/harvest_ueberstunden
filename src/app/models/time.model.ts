@@ -1,5 +1,7 @@
 import { Time } from "@angular/common";
 import { HttpParams } from "@angular/common/http";
+import * as moment from 'moment';
+import { Moment } from "moment";
 
 export interface OverWorkInfo {
     time: Date,
@@ -8,8 +10,8 @@ export interface OverWorkInfo {
 } 
 
 export interface OverWorkWeek {
-    from: Date,
-    to: Date,
+    from: Moment,
+    to: Moment,
     hours: number,
     quota: number
 }
@@ -27,18 +29,18 @@ export class TimeEntryDto {
 export class TimeEntry {
     id: number;
     hours: number;
-    spent_date: Date;
-    timer_started_at: Date;
-    started_time: Date;
-    ended_time: Date;
+    spent_date: Moment;
+    timer_started_at: Moment;
+    started_time: Moment;
+    ended_time: Moment;
     is_running: boolean;
 
     constructor(dto: TimeEntryDto){        
         this.id = dto.id;
         this.hours = dto.hours;
-        this.spent_date = new Date(dto.spent_date),
-        this.timer_started_at = new Date(dto.timer_started_at),
-        this.ended_time = new Date(dto.ended_time),
+        this.spent_date = moment(dto.spent_date),
+        this.timer_started_at = moment(dto.timer_started_at),
+        this.ended_time = moment(dto.ended_time),
         this.is_running = dto.is_running
     }
 }
