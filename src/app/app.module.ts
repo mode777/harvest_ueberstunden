@@ -14,6 +14,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { TimeEntriesReducer } from './main/reducer/main.reducer';
 import { TimeEffects } from "./main/effects/main.effects";
 import { UserService } from './services/user.service';
+import { HolidayService } from './services/holiday.service';
+import { HarvestService } from './services/harvest.service';
 
 
 const routes: Routes = [

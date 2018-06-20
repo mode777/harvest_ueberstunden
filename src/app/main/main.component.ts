@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HarvestService } from '../services/harvest.service';
-import { TimeService } from '../services/time.service';
 import { User, UserInfo } from '../models/user.model';
 import { TimeEntries, TimeEntryDto, TimeEntry, OverWorkInfo } from '../models/time.model';
 import { Store } from '@ngrx/store';
-import { GetTimeEntries, ChangeDateRange } from './actions/main.actions';
+import { ChangeDateRange } from './actions/main.actions';
 import { Observable } from 'rxjs/Observable';
 import { State } from './reducer/main.reducer';
 import { UserService } from '../services/user.service';
-import { getTimeEntries, getOverworkHours, getDateRange, getTimeEntriesRange, getTimeEntriesGrouped, getOverworkInfo, getOverworkTotal } from './selectors/main.selectors';
+import { getTimeEntries, getDateRange, getTimeEntriesAggregatedByDay, getOverworkInfo, getOverworkTotal } from './selectors/main.selectors';
 
 @Component({
   selector: 'app-main',
@@ -24,13 +23,11 @@ export class MainComponent {
   user: User;
   
   constructor(private store: Store<State>, private harvest: HarvestService, private userService: UserService) {
-    store.dispatch(new GetTimeEntries());
     this.user = userService.userInfo.user;
   }
 
   async ngOnInit() {
     this.time_entries = this.store.select(getOverworkInfo);
-    this.overwork = this.store.select(getOverworkHours)
     this.date_range = this.store.select(getDateRange);
     this.overwork = this.store.select(getOverworkTotal);
   }
