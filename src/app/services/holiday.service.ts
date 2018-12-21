@@ -17,8 +17,10 @@ const baseUrl = 'https://feiertage-api.de/api/';
 // Remove holydays not relevant for nuremberg
 function filter(holydays: Holidays){
     const copy = { ...holydays };
+    console.log(copy);
     delete copy['Augsburger Friedensfest'];
     delete copy['Mariä Himmelfahrt'];
+    delete copy['Buß- und Bettag'];
     return copy
 }
 
