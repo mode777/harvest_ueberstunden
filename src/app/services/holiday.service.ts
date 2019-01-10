@@ -16,11 +16,13 @@ const baseUrl = 'https://feiertage-api.de/api/';
 
 // Remove holydays not relevant for nuremberg
 function filter(holydays: Holidays){
-    const copy = { ...holydays };
+    const copy = { ...holydays };    
+    copy["Heiligabend"] 
     console.log(copy);
     delete copy['Augsburger Friedensfest'];
     delete copy['Mariä Himmelfahrt'];
     delete copy['Buß- und Bettag'];
+    
     return copy
 }
 
@@ -28,6 +30,15 @@ function filter(holydays: Holidays){
 export class HolidayService {  
 
     constructor(private http: HttpClient) {}
+
+    getHolidayMultiplier(date: Date){
+        if(date.getMonth() === 11 && date.getDate() === 24)
+            return 0.5;
+        else if(date.getMonth() === 11 && date.getDate() === 31)
+            return 0.5;
+        else
+            return 1;
+    }
 
     getHolidaysInRange(start: Date, end: Date) {
         const startYear = moment(start).year();
@@ -41,12 +52,12 @@ export class HolidayService {
                     jahr: x.toString(),
                     nur_land: 'by'
                 }
-            })))
-        // filter non nuremberg holidays
-        .map(x => x.map(filter)
-                // get arrays of dates
-                .map(y => Object.keys(y)
-                    .map(key => y[key].datum))
+            })
+            // filter non nuremberg holidays
+            .map(filter)))        
+            // get arrays of dates
+        .map(x => x.map(y => Object.keys(y)
+                .map(key => y[key].datum))
                 // merge into single array
                 .reduce<string[]>( (p,c) => [ ...p, ...c ], [])
                 // parse dates

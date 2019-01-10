@@ -45,11 +45,11 @@ export const getOverworkInfoByDay: MemoizedSelector<State, OverWorkInfo[]> = cre
 })
 
 export const getOverworkInfoByWeek: MemoizedSelector<State, OverWorkInfo[]> = createSelector([getOverworkInfoByDay], ow => 
-    groupMap(ow, x => x.time.week().toString(), (k, g) => (<OverWorkInfo>{
+    groupMap(ow, x => x.time.year().toString() + ' KW' +  x.time.week().toString(), (k, g) => (<OverWorkInfo>{
         hours: g.reduce((p,c) => p+c.hours, 0),
         quota: g.reduce((p,c) => p+c.quota, 0),
         time: g[0].time,
-        timeString: 'KW ' + k
+        timeString: k
     })));
 
 export const getOverworkTotal = createSelector([getOverworkInfoByDay], (entries) => entries.reduce<number>((p,c) => p += (c.hours - c.quota), 0));
